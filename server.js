@@ -86,15 +86,6 @@ if(process.env.NODE_ENV === 'production'){
         methods: ['GET','POST','DELETE']
     }));
 
-    // const httpsServer = https.createServer({
-    //     key: fs.readFileSync('certificates/key.pem'),
-    //     cert: fs.readFileSync('certificates/cert.pem'),
-    //   }, app);
-
-    //   httpsServer.listen(port, () => {
-    //     console.log('HTTPS Server running on port 8088');
-    // });
-
     app.get('*', (req, res)=>{
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
@@ -114,9 +105,3 @@ if(process.env.NODE_ENV === 'production'){
     });
 
 }
-
-
-
-
-// mongodb+srv://admin:<password>@details.7lgfxvx.mongodb.net/?retryWrites=true&w=majority
-// mongodb+srv://admin:admin@expensedetails.2a0hr5i.mongodb.net/?retryWrites=true&w=majority
