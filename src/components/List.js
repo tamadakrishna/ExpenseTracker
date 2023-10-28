@@ -7,23 +7,18 @@ import { deleteTransaction } from '../store/expenseSlice';
 export default function List() {
 
 
-  const dispatch = useDispatch();
 
   const Data = useSelector((state) => state.expense.history);
 
 
   let Transactions;
-  const handleClick = (e)=>{
-    if(!e.target.dataset.id) return 0;
-    console.log(e.target.dataset.id)
-    dispatch(deleteTransaction({id:e.target.dataset.id}))
-  }
+  
 //   console.log(data);
   // if(isFetching){
   //   Transactions = <div>Fetching</div>
   // }
   // else if(isSuccess){
-    Transactions = Data.map((v,i) => <Transaction key={i} category={v} handler={handleClick}></Transaction>);
+    Transactions = Data.map((v,i) => <Transaction key={i} category={v} ></Transaction>);
   // }
   // else if(isError){
   //   Transactions = <div>Error</div>;
@@ -35,17 +30,26 @@ export default function List() {
     <div className="flex flex-col py-6 gap-3">
         <h1 className='py-4 font-bold text-xl'>History</h1>
         {Transactions}
-        
     </div>
   )
 }
 
-function Transaction({category, handler}){
+function Transaction({category}){
+
+  const dispatch = useDispatch();
+
+  const handleClick = (e,id)=>{
+    if(!id) return 0;
+
+    console.log('ID :',id)
+    dispatch(deleteTransaction({id}))
+
+    e.preventDefault();
+  }
      if(!category) return null;
      return(
-        <div
-        className="item flex justify-center bg-gray-50 py-2 rounded-r" style={{borderRight: `8px solid ${category.color ?? "#e5e5e5"}`}}>
-            <button className='px-3' onClick={handler}><box-icon data-id={category.id ?? ''} color={`rgb(${category.color})` ?? "#e5e5e5"} size="15px" name='trash' ></box-icon></button>
+        <div className="item flex justify-center bg-gray-50 py-2 rounded-r" style={{borderRight: `8px solid ${category.color ?? "#e5e5e5"}`}}>
+            <button className='px-3' onClick={(e)=>handleClick(e,category.id)}><box-icon data-id={category.id ?? ''} color={`rgb(${category.color})` ?? "#e5e5e5"} size="15px" name='trash' ></box-icon></button>
             <span className='block w-full'>{ category.name ?? ''}</span>
         </div>
      )
