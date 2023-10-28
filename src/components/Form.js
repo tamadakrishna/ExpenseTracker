@@ -6,6 +6,8 @@ import { createTransaction, retrieveTransactions } from '../store/expenseSlice';
 
 export default function Form() {
 
+
+
     const dispatch = useDispatch();
     const {register, handleSubmit, resetField} = useForm();
 

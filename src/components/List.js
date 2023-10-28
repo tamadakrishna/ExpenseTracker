@@ -1,8 +1,13 @@
 import React from 'react';
 import 'boxicons';
+import { useSelector } from 'react-redux';
 
 
 export default function List() {
+
+  const Data = useSelector((state) => state.expense.history);
+
+  console.log('History ',Data)
 
   let Transactions;
   const handleClick = (e)=>{
@@ -13,7 +18,7 @@ export default function List() {
   //   Transactions = <div>Fetching</div>
   // }
   // else if(isSuccess){
-  //   Transactions = data.map((v,i) => <Transaction key={i} category={v} handler={handleClick}></Transaction>);
+    Transactions = Data.map((v,i) => <Transaction key={i} category={v} handler={handleClick}></Transaction>);
   // }
   // else if(isError){
   //   Transactions = <div>Error</div>;
@@ -35,7 +40,7 @@ function Transaction({category, handler}){
      return(
         <div
         className="item flex justify-center bg-gray-50 py-2 rounded-r" style={{borderRight: `8px solid ${category.color ?? "#e5e5e5"}`}}>
-            <button className='px-3' onClick={handler}><box-icon data-id={category._id ?? ''} color={category.color ?? "#e5e5e5"} size="15px" name='trash' ></box-icon></button>
+            <button className='px-3' onClick={handler}><box-icon data-id={category.id ?? ''} color={`rgb(${category.color})` ?? "#e5e5e5"} size="15px" name='trash' ></box-icon></button>
             <span className='block w-full'>{ category.name ?? ''}</span>
         </div>
      )

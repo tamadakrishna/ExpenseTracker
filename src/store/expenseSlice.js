@@ -23,6 +23,7 @@ const initialState = {
     transaction: [],
     graph_data:[],
     history:[],
+    percentages:[],
 }
 
 export const expenseSlice = createSlice({
@@ -41,8 +42,9 @@ export const expenseSlice = createSlice({
         // console.log('Retrieve Transactions success :', action.payload)
         const ExpenseData = getExpenseData(action.payload);
         // const {ExpenseData,history,aggregate,percentages} = getExpenseData(action.payload)
-        // state.transaction = ExpenseData;
         state.graph_data = ExpenseData.aggregate;
+        state.percentages = ExpenseData.percentages;
+        state.history = ExpenseData.history;
         // console.log('aggregate DATA',aggregate)
       })
     }
