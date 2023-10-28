@@ -1,21 +1,19 @@
 import React from 'react'
-import {default as api} from '../store/apiSlice';
 import { GetData } from '../support/support';
 
 export default function Labels() {
 
-   const {data, isFetching, isSuccess, isError} = api.useGetLabelsQuery();
   let Transactions;
-  if(isFetching){
-    Transactions = <div>Fetching</div>
-  }
-  else if(isSuccess){
-    let Collection = GetData(data);
-    Transactions = Collection.map((C,i) => <LabelComponent key={i} data={C}></LabelComponent>);
-  }
-  else if(isError){
+  // if(isFetching){
+  //   Transactions = <div>Fetching</div>
+  // }
+  // else if(isSuccess){
+  //   let Collection = GetData(data);
+  //   Transactions = Collection.map((C,i) => <LabelComponent key={i} data={C}></LabelComponent>);
+  // }
+  // else if(isError){
     Transactions = <div>Error</div>;
-  }
+  // }
    return (
     <>
     {Transactions}

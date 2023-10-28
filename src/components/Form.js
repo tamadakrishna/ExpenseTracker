@@ -1,17 +1,14 @@
 import React from 'react'
 import {useForm } from 'react-hook-form';
 import List from './List';  
-import {default as api} from '../store/apiSlice';
 
 export default function Form() {
 
     const {register, handleSubmit, resetField} = useForm();
 
-    const [addTranasaction] =api.useAddTranasactionMutation();
     
     const onSubmit = async(data) =>{
         if(!data) return {};
-        await addTranasaction(data).unwrap(); 
         resetField('name');
         resetField('amount');
     }

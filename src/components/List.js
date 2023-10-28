@@ -1,27 +1,23 @@
 import React from 'react';
 import 'boxicons';
-import {default as api} from '../store/apiSlice';
 
 
 export default function List() {
 
-    const {data, isFetching, isSuccess, isError} = api.useGetLabelsQuery();
-    const [deleteTransaction] = api.useDeleteTransactionMutation();
   let Transactions;
   const handleClick = (e)=>{
     if(!e.target.dataset.id) return 0;
-    deleteTransaction({_id:e.target.dataset.id})
   }
 //   console.log(data);
-  if(isFetching){
-    Transactions = <div>Fetching</div>
-  }
-  else if(isSuccess){
-    Transactions = data.map((v,i) => <Transaction key={i} category={v} handler={handleClick}></Transaction>);
-  }
-  else if(isError){
-    Transactions = <div>Error</div>;
-  }
+  // if(isFetching){
+  //   Transactions = <div>Fetching</div>
+  // }
+  // else if(isSuccess){
+  //   Transactions = data.map((v,i) => <Transaction key={i} category={v} handler={handleClick}></Transaction>);
+  // }
+  // else if(isError){
+  //   Transactions = <div>Error</div>;
+  // }
 
  
 
