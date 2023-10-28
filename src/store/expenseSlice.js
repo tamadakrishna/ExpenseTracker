@@ -20,7 +20,9 @@ export const retrieveTransactions = createAsyncThunk('retrieveTransactions', asy
   })
 
 const initialState = {
-    transaction: []
+    transaction: [],
+    graph_data:[],
+    history:[],
 }
 
 export const expenseSlice = createSlice({
@@ -36,8 +38,12 @@ export const expenseSlice = createSlice({
         console.log('Create Transaction success :', action.payload);
       })
       .addCase(retrieveTransactions.fulfilled,(state,action)=>{
-        console.log('Retrieve Transactions success :', action.payload)
-        console.log('FORMATTED DATA',getExpenseData(action.payload))
+        // console.log('Retrieve Transactions success :', action.payload)
+        const ExpenseData = getExpenseData(action.payload);
+        // const {ExpenseData,history,aggregate,percentages} = getExpenseData(action.payload)
+        // state.transaction = ExpenseData;
+        state.graph_data = ExpenseData.aggregate;
+        // console.log('aggregate DATA',aggregate)
       })
     }
 })

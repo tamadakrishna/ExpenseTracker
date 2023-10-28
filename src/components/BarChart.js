@@ -1,33 +1,38 @@
 import { Bar } from 'react-chartjs-2';
 import {Chart, registerables} from 'chart.js'; 
-// import { GetData} from '../support/support';
 import Labels from './Labels.js';
+import { useSelector } from 'react-redux';
+
 Chart.register(...registerables)
 
 function BarFunction()
 {
 
-    // const {data, isSuccess} = api.useGetLabelsQuery()
-    let amount = [];
-    let labels =  [];
-    let blue = "54, 208, 245";
-    let pink = "255, 177, 193";
-    let orange ="255, 205, 86";
+  const Data = useSelector((state) => state.expense.graph_data);
+
+  const Bar_Data = Data?.map((info)=>{
+    return info.amount;
+  })
+
+  const Bar_Labels = Data?.map((info)=>{
+    return info.type;
+  })
+
+  const Bar_BorderColors = Data?.map((info)=>{
+    return `rgb(${info.color})` ;
+  });
+
+  const Bar_BackgroundColors = Data?.map((info)=>{
+    return  `rgba(${info.color}, 0.3)`;
+  });
+
     let BarData={
-        labels: ['a','b','v'],
+        labels: Bar_Labels,
         datasets: [{
-          label: 'Total:',
-          data: [10,20,23],
-          backgroundColor: [
-            `rgba(${blue}, 0.3)`,
-            `rgba(${pink},0.3)`,
-            `rgba(${orange},0.3)`
-          ],
-          borderColor: [
-            `rgb(${blue})`, //Blue
-            `rgb(${pink})`, //Pink
-            `rgb(${orange})` //orange
-          ],
+          label: `Total:${Data[0]?.Total}`,
+          data: Bar_Data,
+          backgroundColor: Bar_BackgroundColors,
+          borderColor: Bar_BorderColors,
           borderWidth: 1
         }],
     }

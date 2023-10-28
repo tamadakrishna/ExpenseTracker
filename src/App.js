@@ -1,7 +1,17 @@
 import './App.css';
 import Form from './components/Form';
 import { BarChart } from './components/BarChart';
+import { useDispatch } from 'react-redux';
+import { retrieveTransactions } from './store/expenseSlice';
+import { useEffect } from 'react';
 function App() {
+
+  const dispatch = useDispatch();
+  
+  useEffect(()=>{
+    dispatch(retrieveTransactions())
+  },[])
+  
   return (
     <div className="App">
       <div className="container mx-auto max-w-6xl text-center drop-shadow-lg text-gray-800">

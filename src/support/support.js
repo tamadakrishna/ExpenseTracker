@@ -1,12 +1,9 @@
 
 const Add_Color = (data) =>{
 
-    let orange ='rgb(255, 205, 86)'; // Investment
-    let blue = 'rgb(54, 208, 245)';  // Expense
-    let pink = 'rgb(255, 177, 193';  // Savings
-
-    
-    console.log('Expense Data: ',data)
+    let orange ='255, 205, 86'; // Investment
+    let blue = '54, 208, 245';  // Expense
+    let pink = '255, 177, 193';  // Savings
 
     const DATA = data.map((info)=>{
         let temp_color = '';
@@ -67,10 +64,11 @@ const Aggregate_Amount = (data) =>{
         }
     }
 
-    console.log('Aggregate', Aggregate)
+    return Aggregate;
 }
 
 const History = (data) =>{
+
     const history = data.map((info)=>{
         return {
             id:info.id,
@@ -79,23 +77,36 @@ const History = (data) =>{
         }
     });
 
-    console.log('History', history)
-
     return history;
 }
 
 const Percentage = (data)=>{
 
-    
+    let Total = 0;
+    for(let i=0;i<data.length;i++)
+    {
+        Total += data[i].amount;
+    }
+
+    for(let i=0;i<data.length;i++)
+    {
+        const percentage = parseFloat((data[i].amount/Total)*100).toFixed(2)
+        data[i]["Percentage"] = percentage;
+        data[i]["Total"] = Total;
+    }
+
+    return data;
 }
 
 export const getExpenseData = (data) =>{
 
-    const DATA = Add_Color(data)
+    const ExpenseData = Add_Color(data)
 
-    const Aggregate = Aggregate_Amount(DATA)
+    const history = History(ExpenseData)
 
-    History(DATA)
-   
-    return DATA;
+    const aggregate = Aggregate_Amount(ExpenseData)
+
+    const percentages = Percentage(aggregate)
+
+    return {ExpenseData,history,aggregate,percentages}
 }
