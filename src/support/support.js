@@ -1,49 +1,101 @@
-export function GetData(data)
-{
-    let D ={};
-    let A = {};
-    let Total=0;
-    for(let i=0;i<data.length;i++)
-    {
-        if(!D.hasOwnProperty(data[i].type))
-        D[data[i].type]= data[i].amount;
-        else
-        D[data[i].type] = D[data[i].type] + data[i].amount;
-    }
-   
-    for(let V in D)
-    {
-        Total = Total + D[V];
-        A[V] = D[V];
-    }
 
-    for(let V in D)
-    {
-        D[V] = parseFloat(((D[V]/Total)*100)).toFixed(2);
-    }
+const Add_Color = (data) =>{
 
-    let Collection = [];
-    let index=0;
-    for(let V in D)
-    {
-        Collection[index] = Object.create({});
-        for(let i=0;i<data.length;i++)
+    let orange ='rgb(255, 205, 86)'; // Investment
+    let blue = 'rgb(54, 208, 245)';  // Expense
+    let pink = 'rgb(255, 177, 193';  // Savings
+
+    
+    console.log('Expense Data: ',data)
+
+    const DATA = data.map((info)=>{
+        let temp_color = '';
+        if(info.type==="Investment")
         {
-            if(V===data[i].type)
-            {
-                Object.defineProperties(Collection[index],{
-                    id:{value:data[i]._id},
-                    type:{value: data[i].type},
-                    color:{value: data[i].color},
-                    amount:{value: A[V]},
-                    percent:{value: D[V]},
-                });
-                index=index+1;
-                break;
-            }
+        temp_color = orange;
         }
-    }
-    Collection["Total"]=Total;
-    return Collection;
+        else if(info.type==="Expense")
+        {
+            temp_color = blue;
+        }
+        else if(info.type==="Savings")
+        {
+            temp_color = pink;
+        }
+        return {
+            id:info._id,
+            name:info.name,
+            type:info.type,
+            amount:info.amount,
+            color: temp_color
+        }
+    })
+
+    return DATA;
 }
 
+const Aggregate_Amount = (data) =>{
+
+    const Aggregate = [
+        {
+            type:"Investment",
+            amount:0,
+            color:''
+        },
+        {
+            type:"Expense",
+            amount:0,
+            color:''
+        },
+        {
+            type:"Savings",
+            amount:0,
+            color:''
+        },
+    ];
+
+    for(let i=0;i<Aggregate.length;i++)
+    {
+        for(let j=0;j<data.length;j++)
+        {
+            if(Aggregate[i].type===data[j].type)
+            {
+                Aggregate[i].amount += data[j].amount;
+                Aggregate[i].color = data[j].color; 
+            }
+
+        }
+    }
+
+    console.log('Aggregate', Aggregate)
+}
+
+const History = (data) =>{
+    const history = data.map((info)=>{
+        return {
+            id:info.id,
+            name:info.name,
+            color:info.color,
+        }
+    });
+
+    console.log('History', history)
+
+    return history;
+}
+
+const Percentage = (data)=>{
+
+    
+}
+
+export const getExpenseData = (data) =>{
+
+    const DATA = Add_Color(data)
+
+    const Aggregate = Aggregate_Amount(DATA)
+
+    History(DATA)
+   
+    return DATA;
+}

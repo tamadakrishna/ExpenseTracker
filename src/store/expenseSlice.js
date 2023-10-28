@@ -1,5 +1,6 @@
 import { createSlice,createAsyncThunk} from '@reduxjs/toolkit'
 import axios from 'axios';
+import { getExpenseData } from '../support/support';
 
 const URI = 'https://localhost:8088'
 
@@ -36,6 +37,7 @@ export const expenseSlice = createSlice({
       })
       .addCase(retrieveTransactions.fulfilled,(state,action)=>{
         console.log('Retrieve Transactions success :', action.payload)
+        console.log('FORMATTED DATA',getExpenseData(action.payload))
       })
     }
 })
