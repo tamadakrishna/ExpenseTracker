@@ -15,8 +15,7 @@ export default function Form() {
     const onSubmit = async(data) =>{
         if(!data) return {};
 
-        // dispatch(createTransaction(data))
-        dispatch(retrieveTransactions())
+        dispatch(createTransaction(data))
         resetField('name');
         resetField('amount');
     }

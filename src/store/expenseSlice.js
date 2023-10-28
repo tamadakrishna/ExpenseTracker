@@ -8,6 +8,9 @@ export const createTransaction = createAsyncThunk('createTransaction', async (da
 
     const response = await axios.post(`${URI}/create_Transaction`,data)
 
+    dispatch(retrieveTransactions());
+
+
     return response.data;
   })
 
@@ -16,6 +19,18 @@ export const retrieveTransactions = createAsyncThunk('retrieveTransactions', asy
 
   const response = await axios.get(`${URI}/get_Transactions`)
   
+    return response.data;
+  })
+
+
+export const deleteTransaction = createAsyncThunk('deleteTransaction', async (data, {dispatch}) => {
+
+    const response = await axios.delete(`${URI}/delete_Transaction`,data)
+
+
+    dispatch(retrieveTransactions());
+
+
     return response.data;
   })
 
@@ -36,16 +51,16 @@ export const expenseSlice = createSlice({
     },
     extraReducers:(builder)=>{
       builder.addCase(createTransaction.fulfilled,(state,action)=>{
-        console.log('Create Transaction success :', action.payload);
+        // console.log('Create Transaction success :', action.payload);
       })
       .addCase(retrieveTransactions.fulfilled,(state,action)=>{
-        // console.log('Retrieve Transactions success :', action.payload)
         const ExpenseData = getExpenseData(action.payload);
-        // const {ExpenseData,history,aggregate,percentages} = getExpenseData(action.payload)
         state.graph_data = ExpenseData.aggregate;
         state.percentages = ExpenseData.percentages;
         state.history = ExpenseData.history;
-        // console.log('aggregate DATA',aggregate)
+      })
+      .addCase(deleteTransaction.fulfilled,(state,action)=>{
+        // console.log('Delete Successfully');
       })
     }
 })

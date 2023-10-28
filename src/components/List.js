@@ -1,17 +1,22 @@
 import React from 'react';
 import 'boxicons';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteTransaction } from '../store/expenseSlice';
 
 
 export default function List() {
 
+
+  const dispatch = useDispatch();
+
   const Data = useSelector((state) => state.expense.history);
 
-  console.log('History ',Data)
 
   let Transactions;
   const handleClick = (e)=>{
     if(!e.target.dataset.id) return 0;
+    console.log(e.target.dataset.id)
+    dispatch(deleteTransaction({id:e.target.dataset.id}))
   }
 //   console.log(data);
   // if(isFetching){
