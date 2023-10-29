@@ -55,7 +55,7 @@ con.then(db=>{
     });
 
     //Delete Transaction
-    app.delete('/delete_Transaction', controller.delete_Transaction);
+    app.post('/delete_Transaction', controller.delete_Transaction);
 
     //Get Labels
     app.get('/get_Labels', controller.get_Labels);
