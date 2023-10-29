@@ -1,16 +1,13 @@
 import React from 'react';
-import 'boxicons';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteTransaction } from '../store/expenseSlice';
+import { Icon } from '@iconify/react';
 
 
 export default function List() {
 
-
-
   const Data = useSelector((state) => state.expense.history);
-
-
+  
   let Transactions;
   
 //   console.log(data);
@@ -41,14 +38,17 @@ function Transaction({category}){
   const handleClick = (id)=>{
     if(!id) return 0;
 
-    console.log('ID :',id)
     dispatch(deleteTransaction({"_id":id}))
+
   }
      if(!category) return null;
      return(
-        <div className="item flex justify-center bg-gray-50 py-2 rounded-r" style={{borderRight: `8px solid ${category.color ?? "#e5e5e5"}`}}>
-            <button className='px-3' onClick={(e)=>handleClick(category.id)}><box-icon data-id={category.id ?? ''} color={`rgb(${category.color})` ?? "#e5e5e5"} size="15px" name='trash' ></box-icon></button>
+        <div className="item flex justify-center bg-gray-50 py-2 rounded-r" style={{borderRight:`8px solid ${`rgb(${category.color}`}`}} >
+            <button className='px-3' onClick={(e)=>handleClick(category.id)}>
+              <Icon icon="mdi:delete" color={`rgb(${category.color})` ?? "#e5e5e5"} width="22" height="22" />
+            </button>
             <span className='block w-full'>{ category.name ?? ''}</span>
         </div>
      )
 }
+
