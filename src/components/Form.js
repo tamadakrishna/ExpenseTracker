@@ -1,17 +1,14 @@
 import React from 'react'
 import {useForm } from 'react-hook-form';
 import List from './List';  
-import { useSelector, useDispatch } from 'react-redux'
-import { createTransaction, retrieveTransactions } from '../store/expenseSlice';
+import { useDispatch } from 'react-redux'
+import { createTransaction } from '../store/expenseSlice';
 
 export default function Form() {
-
-
 
     const dispatch = useDispatch();
     const {register, handleSubmit, resetField} = useForm();
 
-    
     const onSubmit = async(data) =>{
         if(!data) return {};
 

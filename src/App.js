@@ -10,8 +10,8 @@ function App() {
   
   useEffect(()=>{
     dispatch(retrieveTransactions())
-  },[])
-  
+  })
+
   return (
     <div className="App">
       <div className="container mx-auto max-w-6xl text-center drop-shadow-lg text-gray-800">

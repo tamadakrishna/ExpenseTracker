@@ -10,7 +10,6 @@ export const createTransaction = createAsyncThunk('createTransaction', async (da
 
     dispatch(retrieveTransactions());
 
-
     return response.data;
   })
 
@@ -33,7 +32,6 @@ export const deleteTransaction = createAsyncThunk('deleteTransaction', async (da
   })
 
 const initialState = {
-    transaction: [],
     graph_data:[],
     history:[],
     percentages:[],
