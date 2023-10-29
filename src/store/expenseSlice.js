@@ -2,7 +2,7 @@ import { createSlice,createAsyncThunk} from '@reduxjs/toolkit'
 import axios from 'axios';
 import { getExpenseData } from '../support/support';
 
-const URI = 'https://localhost:8088'
+const URI = 'https://localhost:8088';
 
 export const createTransaction = createAsyncThunk('createTransaction', async (data, {dispatch}) => {
 
