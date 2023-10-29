@@ -25,11 +25,9 @@ export const retrieveTransactions = createAsyncThunk('retrieveTransactions', asy
 
 export const deleteTransaction = createAsyncThunk('deleteTransaction', async (data, {dispatch}) => {
 
-    const response = await axios.delete(`${URI}/delete_Transaction`,data)
-
+    const response = await axios.post(`${URI}/delete_Transaction`,data)
 
     dispatch(retrieveTransactions());
-
 
     return response.data;
   })
