@@ -6,16 +6,14 @@ export default function Labels() {
   const Data = useSelector((state) => state.expense.percentages);
 
   let Transactions;
-  // if(isFetching){
-  //   Transactions = <div>Fetching</div>
-  // }
-  // else if(isSuccess){
-  //   let Collection = GetData(data);
+  if(Data.length===0){
+    Transactions = <div>Fetching...</div>
+  }
+  else
+  {
     Transactions = Data.map((C,i) => <LabelComponent key={i} data={C}></LabelComponent>);
-  // }
-  // else if(isError){
-    // Transactions = <div>Error</div>;
-  // }
+  }
+
    return (
     <>
     {Transactions}

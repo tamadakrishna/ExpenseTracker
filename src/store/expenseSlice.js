@@ -2,7 +2,7 @@ import { createSlice,createAsyncThunk} from '@reduxjs/toolkit'
 import axios from 'axios';
 import { getExpenseData } from '../support/support';
 
-const URI = 'https://localhost:8088';
+const URI = 'http://localhost:8088';
 
 export const createTransaction = createAsyncThunk('createTransaction', async (data, {dispatch}) => {
 
@@ -41,13 +41,24 @@ export const expenseSlice = createSlice({
     name:'expense',
     initialState,
     reducers:{
-        getTransactions: (state)=>{
-
+        setLoading: (state)=>{
+          state.history = 'Loading'
+          state.percentages = 'Loading'
         }
     },
     extraReducers:(builder)=>{
-      builder.addCase(createTransaction.fulfilled,(state,action)=>{
-        // console.log('Create Transaction success :', action.payload);
+      builder.addCase(createTransaction.pending,(state,action)=>{
+        // console.log('Pending...')
+        // setLoading()
+      })
+      .addCase(retrieveTransactions.pending,(state,action)=>{
+        setLoading()
+      })
+      .addCase(deleteTransaction.pending,(state,action)=>{
+        // console.log('Pending...')
+      })
+      .addCase(createTransaction.fulfilled,(state,action)=>{
+        // console.log('Pending...')
       })
       .addCase(retrieveTransactions.fulfilled,(state,action)=>{
         const ExpenseData = getExpenseData(action.payload);
@@ -56,10 +67,10 @@ export const expenseSlice = createSlice({
         state.history = ExpenseData.history;
       })
       .addCase(deleteTransaction.fulfilled,(state,action)=>{
-        // console.log('Delete Successfully');
+        // console.log('Pending...')
       })
     }
 })
 
-export const { getTransactions } = expenseSlice.actions;
+export const { setLoading } = expenseSlice.actions;
 export default expenseSlice.reducer;

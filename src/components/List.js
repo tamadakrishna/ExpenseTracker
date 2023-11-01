@@ -10,18 +10,12 @@ export default function List() {
   
   let Transactions;
   
-//   console.log(data);
-  // if(isFetching){
-  //   Transactions = <div>Fetching</div>
-  // }
-  // else if(isSuccess){
+  if(Data.length===0){
+    Transactions = <div>Fetching...</div>
+  }
+  else{
     Transactions = Data.map((v,i) => <Transaction key={i} category={v} ></Transaction>);
-  // }
-  // else if(isError){
-  //   Transactions = <div>Error</div>;
-  // }
-
- 
+  }
 
   return (
     <div className="flex flex-col py-6 gap-3">
