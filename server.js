@@ -62,13 +62,13 @@ con.then(db=>{
 
 
 
-    const httpsServer = https.createServer({
-        key: fs.readFileSync('certificates/key.pem'),
-        cert: fs.readFileSync('certificates/cert.pem'),
-      }, app);
+    // const httpsServer = https.createServer({
+    //     key: fs.readFileSync('certificates/key.pem'),
+    //     cert: fs.readFileSync('certificates/cert.pem'),
+    //   }, app);
       
-    httpsServer.listen(port, () => {
-        console.log('HTTPS Server running on port 8088');
+    app.listen(port,'0.0.0.0', () => {
+        console.log(`HTTPS Server running on port ${port}`);
     });
       
 
