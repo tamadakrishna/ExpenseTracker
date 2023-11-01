@@ -92,6 +92,11 @@ if(process.env.NODE_ENV === 'production'){
         // res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
 
+    app.get('/get_Transactions',async (req, res)=>{
+        let data = await controller.get_Transaction();
+        return res.json(await data);
+    });
+
 
     app.use(function (req, res, next){
         res.header("Access-Control-Allow-Origin", "*");
