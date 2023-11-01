@@ -35,6 +35,7 @@ const initialState = {
     graph_data:[],
     history:[],
     percentages:[],
+    status:''
 }
 
 export const expenseSlice = createSlice({
@@ -44,6 +45,9 @@ export const expenseSlice = createSlice({
         setLoading: (state)=>{
           state.history = 'Loading'
           state.percentages = 'Loading'
+        },
+        setStatus:(state,action)=>{
+          state.status = action.payload;
         }
     },
     extraReducers:(builder)=>{
@@ -59,6 +63,7 @@ export const expenseSlice = createSlice({
       })
       .addCase(createTransaction.fulfilled,(state,action)=>{
         // console.log('Pending...')
+        state.status = 'created';
       })
       .addCase(retrieveTransactions.fulfilled,(state,action)=>{
         const ExpenseData = getExpenseData(action.payload);
@@ -69,8 +74,12 @@ export const expenseSlice = createSlice({
       .addCase(deleteTransaction.fulfilled,(state,action)=>{
         // console.log('Pending...')
       })
+      .addCase(createTransaction.rejected,(state,action)=>{
+        // console.log('Pending...')
+        state.status = 'creation_fail';
+      })
     }
 })
 
-export const { setLoading } = expenseSlice.actions;
+export const { setLoading, setStatus } = expenseSlice.actions;
 export default expenseSlice.reducer;

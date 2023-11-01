@@ -1,12 +1,33 @@
 import React from 'react'
 import {useForm } from 'react-hook-form';
 import List from './List';  
-import { useDispatch } from 'react-redux'
-import { createTransaction } from '../store/expenseSlice';
+import { useDispatch, useSelector } from 'react-redux'
+import { createTransaction, setStatus } from '../store/expenseSlice';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Form() {
 
     const dispatch = useDispatch();
+    const status = useSelector((state) => state.expense.status);
+
+    const notify = (status) => {
+        if(status==='success')
+        toast.success('Saved Successfully');
+        else if(status==='failure')
+        toast.error('Saving failed')
+    }
+
+    if(status==='created')
+    {
+        notify('success');
+        dispatch(setStatus(''))
+    }
+    else if(status==='creation_fail')
+    {
+        notify('failure');
+        dispatch(setStatus(''))
+    }
+
     const {register, handleSubmit, resetField} = useForm();
 
     const onSubmit = async(data) =>{
@@ -37,6 +58,10 @@ export default function Form() {
                     <button className='border py-2 text-white  bg-red-800 w-full'>Make Transaction</button>
                 </div>
             </div>
+              <Toaster
+                position="top-right"
+                reverseOrder={false}
+                />
         </form>
         <List></List>
     </div>
