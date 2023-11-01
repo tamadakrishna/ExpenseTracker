@@ -9,5 +9,3 @@ const conn = mongoose.connect(process.env.ATLAS_URI)
     })
 
     module.exports = conn;
-
-    //"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"

@@ -6,8 +6,6 @@ require('dotenv').config({ path : "./config.env"});
 const con = require('./db/connection.js');
 const controller = require("./controller/controller");
 const port = process.env.PORT || 5000;
-const fs = require('fs');
-const https = require('https');
 
 app.use(express.json());
 
@@ -16,8 +14,6 @@ app.use(cors({
     origin:'*',
     methods: ['GET','POST','DELETE']
 }));
-
-
 
 con.then(db=>{
     if(!db) return process.exit(1);
@@ -45,9 +41,6 @@ con.then(db=>{
     //Create Transactions
     app.post('/create_Transaction', controller.create_Transaction);
 
-    //Get Categories
-    app.get('/get_Categories',controller.get_Categories);
-    
     //Get Transactions
     app.get('/get_Transactions',async (req, res)=>{
         let data = await controller.get_Transaction();
@@ -57,17 +50,7 @@ con.then(db=>{
     //Delete Transaction
     app.post('/delete_Transaction', controller.delete_Transaction);
 
-    //Get Labels
-    app.get('/get_Labels', controller.get_Labels);
-
-
-
-    // const httpsServer = https.createServer({
-    //     key: fs.readFileSync('certificates/key.pem'),
-    //     cert: fs.readFileSync('certificates/cert.pem'),
-    //   }, app);
-      
-    app.listen(port,'0.0.0.0', () => {
+      app.listen(port,() => {
         console.log(`HTTPS Server running on port ${port}`);
     });
       
@@ -77,10 +60,8 @@ con.then(db=>{
     console.log(`Connection Failed...! ${error}`);
 });
 
-//Serve static assets if in production
-
+//PRODUCTION
 if(process.env.NODE_ENV === 'production'){
-    // app.use(express.static('client/build'));
 
     app.use(cors({
         origin:'*',
@@ -88,8 +69,7 @@ if(process.env.NODE_ENV === 'production'){
     }));
 
     app.get('/', (req, res)=>{
-        res.send('API')
-        // res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+        res.send('REST API for https://personaltracker.web.app/')
     });
 
     app.get('/get_Transactions',async (req, res)=>{
@@ -112,3 +92,4 @@ if(process.env.NODE_ENV === 'production'){
     });
 
 }
+
