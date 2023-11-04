@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteTransaction } from '../store/expenseSlice';
+import { deleteTransaction, setStatus } from '../store/expenseSlice';
 import { Icon } from '@iconify/react';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 export default function List() {
@@ -11,7 +12,7 @@ export default function List() {
   let Transactions;
   
   if(Data.length===0){
-    Transactions = <div>Fetching...</div>
+    Transactions = <div>Fetching<span className='loader'></span></div>
   }
   else{
     Transactions = Data.map((v,i) => <Transaction key={i} category={v} ></Transaction>);
@@ -29,6 +30,27 @@ function Transaction({category}){
 
   const dispatch = useDispatch();
 
+  const status = useSelector((state) => state.expense.status);
+
+
+  const notify = (status) => {
+    if(status==='success')
+    toast.success('Deleted Successfully');
+    else if(status==='failure')
+    toast.error('Deletion failed')
+}
+
+if(status==='deleted')
+{
+    notify('success');
+    dispatch(setStatus(''))
+}
+else if(status==='deletion_fail')
+{
+    notify('failure');
+    dispatch(setStatus(''))
+}
+
   const handleClick = (id)=>{
     if(!id) return 0;
 
@@ -42,6 +64,10 @@ function Transaction({category}){
               <Icon icon="mdi:delete" color={`rgb(${category.color})` ?? "#e5e5e5"} width="22" height="22" />
             </button>
             <span className='block w-full'>{ category.name ?? ''}</span>
+            <Toaster
+                position="top-right"
+                reverseOrder={false}
+                />
         </div>
      )
 }

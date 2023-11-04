@@ -2,7 +2,7 @@ import { createSlice,createAsyncThunk} from '@reduxjs/toolkit'
 import axios from 'axios';
 import { getExpenseData } from '../support/support';
 
-const URI = 'http://localhost:8088';
+const URI = 'https://expensetracker-i8hv.onrender.com';
 
 export const createTransaction = createAsyncThunk('createTransaction', async (data, {dispatch}) => {
 
@@ -72,11 +72,14 @@ export const expenseSlice = createSlice({
         state.history = ExpenseData.history;
       })
       .addCase(deleteTransaction.fulfilled,(state,action)=>{
-        // console.log('Pending...')
+        state.status = 'deleted';
       })
       .addCase(createTransaction.rejected,(state,action)=>{
         // console.log('Pending...')
         state.status = 'creation_fail';
+      })
+      .addCase(deleteTransaction.rejected,(state,action)=>{
+        state.status = 'deletion_fail';
       })
     }
 })

@@ -33,9 +33,15 @@ export default function Form() {
     const onSubmit = async(data) =>{
         if(!data) return {};
 
-        dispatch(createTransaction(data))
+        if(data.name!==undefined && data.amount!==undefined)
+        {
+
+        console.log(data)
+        // dispatch(createTransaction(data))
         resetField('name');
         resetField('amount');
+        }
+
     }
 
   return (

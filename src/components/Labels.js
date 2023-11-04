@@ -7,7 +7,7 @@ export default function Labels() {
 
   let Transactions;
   if(Data.length===0){
-    Transactions = <div>Fetching...</div>
+    Transactions = <div>Fetching <span className='loader'></span></div>
   }
   else
   {
